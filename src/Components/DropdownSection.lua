@@ -34,25 +34,6 @@ return function(Title, Parent)
 		},
 	})
 
-	-- Static gradient underline
-	local GradientFrame = New("Frame", {
-		Size = UDim2.new(1, 0, 0, 1),
-		Position = UDim2.fromOffset(0, 28),
-		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-		BorderSizePixel = 0,
-		ThemeTag = {
-			BackgroundColor3 = "SubText",
-		},
-	}, {
-		New("UIGradient", {
-			Transparency = NumberSequence.new({
-				NumberSequenceKeypoint.new(0, 1),
-				NumberSequenceKeypoint.new(0.5, 0.5),
-				NumberSequenceKeypoint.new(1, 1),
-			}),
-		}),
-	})
-
 	-- Clickable header button
 	DropdownSection.HeaderButton = New("TextButton", {
 		Size = UDim2.new(1, 0, 0, 22),
@@ -85,7 +66,6 @@ return function(Title, Parent)
 		Parent = Parent,
 	}, {
 		DropdownSection.HeaderButton,
-		GradientFrame,
 		DropdownSection.Container,
 	})
 
