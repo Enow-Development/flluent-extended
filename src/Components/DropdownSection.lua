@@ -90,20 +90,6 @@ return function(Title, Parent)
 		DropdownSection.Container,
 	})
 
-	-- Animate the gradient rotation for running effect
-	local GradientRotation = 0
-	local GradientGradient = GradientFrame:FindFirstChildOfClass("UIGradient")
-	
-	task.spawn(function()
-		while DropdownSection.Root and DropdownSection.Root.Parent do
-			GradientRotation = (GradientRotation + 2) % 360
-			if GradientGradient then
-				GradientGradient.Rotation = GradientRotation
-			end
-			task.wait(0.03)
-		end
-	end)
-
 	-- Spring motors for smooth animations
 	local ContainerSizeMotor = Flipper.SingleMotor.new(0)
 	local ArrowRotationMotor = Flipper.SingleMotor.new(0)
