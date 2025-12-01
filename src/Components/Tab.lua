@@ -161,6 +161,21 @@ function TabModule:New(Title, Icon, Parent)
 		return Section
 	end
 
+	function Tab:AddDropdownSection(SectionTitle)
+		local DropdownSection = { Type = "DropdownSection" }
+
+		local DropdownSectionFrame = require(Components.DropdownSection)(SectionTitle, Tab.Container)
+		DropdownSection.Container = DropdownSectionFrame.Container
+		DropdownSection.ScrollFrame = Tab.Container
+		DropdownSection.Toggle = function() DropdownSectionFrame:Toggle() end
+		DropdownSection.Open = function() DropdownSectionFrame:Open() end
+		DropdownSection.Close = function() DropdownSectionFrame:Close() end
+		DropdownSection.SetOpened = function(state) DropdownSectionFrame:SetOpened(state) end
+
+		setmetatable(DropdownSection, Elements)
+		return DropdownSection
+	end
+
 	setmetatable(Tab, Elements)
 	return Tab
 end

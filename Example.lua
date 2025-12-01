@@ -219,6 +219,33 @@ do
     Input:OnChanged(function()
         print("Input updated:", Input.Value)
     end)
+
+
+    -- Dropdown Section Example
+    local DropdownSection = Tabs.Main:AddDropdownSection("Collapsible Section")
+
+    DropdownSection:AddParagraph({
+        Title = "Inside Dropdown Section",
+        Content = "This content can be collapsed!"
+    })
+
+    DropdownSection:AddButton({
+        Title = "Button in Section",
+        Description = "Click to toggle section",
+        Callback = function()
+            DropdownSection.Toggle()
+        end
+    })
+
+    DropdownSection:AddToggle("SectionToggle", {
+        Title = "Toggle in Section",
+        Default = false
+    })
+
+    -- You can control the section programmatically
+    -- DropdownSection.Close()  -- Close the section
+    -- DropdownSection.Open()   -- Open the section
+    -- DropdownSection.SetOpened(false)  -- Set state directly
 end
 
 
