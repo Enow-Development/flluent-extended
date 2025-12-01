@@ -19,6 +19,12 @@ return function(Title, Parent)
 		BackgroundTransparency = 1,
 		ClipsDescendants = true,
 	}, {
+		New("UIPadding", {
+			PaddingTop = UDim.new(0, 8),
+			PaddingBottom = UDim.new(0, 8),
+			PaddingLeft = UDim.new(0, 8),
+			PaddingRight = UDim.new(0, 8),
+		}),
 		DropdownSection.Layout,
 	})
 
@@ -106,12 +112,14 @@ return function(Title, Parent)
 
 	local function UpdateSize()
 		local contentSize = DropdownSection.Layout.AbsoluteContentSize.Y
-		local targetSize = DropdownSection.Opened and contentSize or 0
+		-- Add padding (8px top + 8px bottom = 16px) when opened
+		local paddingSize = DropdownSection.Opened and 16 or 0
+		local targetSize = DropdownSection.Opened and (contentSize + paddingSize) or 0
 		
 		ContainerSizeMotor:setGoal(Flipper.Spring.new(targetSize, { frequency = 5 }))
 		
-		-- Update border size to match content
-		local borderHeight = DropdownSection.Opened and (contentSize + 38) or 30
+		-- Update border size to match content with padding
+		local borderHeight = DropdownSection.Opened and (contentSize + paddingSize + 38) or 30
 		BorderSizeMotor:setGoal(Flipper.Spring.new(borderHeight, { frequency = 5 }))
 		
 		-- Update root size
