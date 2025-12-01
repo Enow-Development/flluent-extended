@@ -34,6 +34,26 @@ return function(Title, Parent)
 		},
 	})
 
+	-- Animated gradient underline
+	local GradientFrame = New("Frame", {
+		Size = UDim2.new(1, 0, 0, 1),
+		Position = UDim2.fromOffset(0, 28),
+		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+		BorderSizePixel = 0,
+		ThemeTag = {
+			BackgroundColor3 = "Accent",
+		},
+	}, {
+		New("UIGradient", {
+			Transparency = NumberSequence.new({
+				NumberSequenceKeypoint.new(0, 1),
+				NumberSequenceKeypoint.new(0.5, 0.3),
+				NumberSequenceKeypoint.new(1, 1),
+			}),
+			Rotation = 0,
+		}),
+	})
+
 	-- Clickable header button
 	DropdownSection.HeaderButton = New("TextButton", {
 		Size = UDim2.new(1, 0, 0, 22),
@@ -66,8 +86,23 @@ return function(Title, Parent)
 		Parent = Parent,
 	}, {
 		DropdownSection.HeaderButton,
+		GradientFrame,
 		DropdownSection.Container,
 	})
+
+	-- Animate the gradient rotation for running effect
+	local GradientRotation = 0
+	local GradientGradient = GradientFrame:FindFirstChildOfClass("UIGradient")
+	
+	task.spawn(function()
+		while DropdownSection.Root and DropdownSection.Root.Parent do
+			GradientRotation = (GradientRotation + 2) % 360
+			if GradientGradient then
+				GradientGradient.Rotation = GradientRotation
+			end
+			task.wait(0.03)
+		end
+	end)
 
 	-- Spring motors for smooth animations
 	local ContainerSizeMotor = Flipper.SingleMotor.new(0)
