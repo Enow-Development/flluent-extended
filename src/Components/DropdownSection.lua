@@ -34,23 +34,22 @@ return function(Title, Parent)
 		},
 	})
 
-	-- Animated gradient underline
+	-- Static gradient underline
 	local GradientFrame = New("Frame", {
 		Size = UDim2.new(1, 0, 0, 1),
 		Position = UDim2.fromOffset(0, 28),
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		BorderSizePixel = 0,
 		ThemeTag = {
-			BackgroundColor3 = "Accent",
+			BackgroundColor3 = "SubText",
 		},
 	}, {
 		New("UIGradient", {
 			Transparency = NumberSequence.new({
 				NumberSequenceKeypoint.new(0, 1),
-				NumberSequenceKeypoint.new(0.5, 0.3),
+				NumberSequenceKeypoint.new(0.5, 0.5),
 				NumberSequenceKeypoint.new(1, 1),
 			}),
-			Rotation = 0,
 		}),
 	})
 
