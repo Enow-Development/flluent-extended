@@ -48,10 +48,10 @@ return function(Title, Parent)
 			TextTransparency = 0,
 			FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
 			TextSize = 18,
-			TextXAlignment = "Left",
+			TextXAlignment = "Right",
 			TextYAlignment = "Center",
 			Size = UDim2.new(1, -20, 1, 0),
-			Position = UDim2.fromOffset(20, 0),
+			Position = UDim2.fromOffset(0, 0),
 			BackgroundTransparency = 1,
 			ThemeTag = {
 				TextColor3 = "Text",
