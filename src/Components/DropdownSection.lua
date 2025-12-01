@@ -59,12 +59,32 @@ return function(Title, Parent)
 		}),
 	})
 
+	-- Border frame that wraps everything
+	DropdownSection.BorderFrame = New("Frame", {
+		Size = UDim2.new(1, 0, 0, 30),
+		BackgroundTransparency = 1,
+		BorderSizePixel = 0,
+	}, {
+		New("UICorner", {
+			CornerRadius = UDim.new(0, 6),
+		}),
+		New("UIStroke", {
+			Thickness = 1,
+			Transparency = 0.85,
+			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
+			ThemeTag = {
+				Color = "InElementBorder",
+			},
+		}),
+	})
+
 	DropdownSection.Root = New("Frame", {
 		BackgroundTransparency = 1,
 		Size = UDim2.new(1, 0, 0, 26),
 		LayoutOrder = 7,
 		Parent = Parent,
 	}, {
+		DropdownSection.BorderFrame,
 		DropdownSection.HeaderButton,
 		DropdownSection.Container,
 	})
@@ -72,6 +92,7 @@ return function(Title, Parent)
 	-- Spring motors for smooth animations
 	local ContainerSizeMotor = Flipper.SingleMotor.new(0)
 	local ArrowRotationMotor = Flipper.SingleMotor.new(0)
+	local BorderSizeMotor = Flipper.SingleMotor.new(30)
 
 	ContainerSizeMotor:onStep(function(value)
 		DropdownSection.Container.Size = UDim2.new(1, 0, 0, value)
@@ -81,11 +102,19 @@ return function(Title, Parent)
 		DropdownSection.Arrow.Rotation = value
 	end)
 
+	BorderSizeMotor:onStep(function(value)
+		DropdownSection.BorderFrame.Size = UDim2.new(1, 0, 0, value)
+	end)
+
 	local function UpdateSize()
 		local contentSize = DropdownSection.Layout.AbsoluteContentSize.Y
 		local targetSize = DropdownSection.Opened and contentSize or 0
 		
 		ContainerSizeMotor:setGoal(Flipper.Spring.new(targetSize, { frequency = 5 }))
+		
+		-- Update border size to match content
+		local borderHeight = DropdownSection.Opened and (contentSize + 38) or 30
+		BorderSizeMotor:setGoal(Flipper.Spring.new(borderHeight, { frequency = 5 }))
 		
 		-- Update root size
 		DropdownSection.Root.Size = UDim2.new(1, 0, 0, targetSize + 38)
