@@ -69,11 +69,11 @@ return function(Title, Parent)
 			CornerRadius = UDim.new(0, 6),
 		}),
 		New("UIStroke", {
-			Thickness = 1,
-			Transparency = 0.85,
+			Thickness = 1.5,
+			Transparency = 0.5,
 			ApplyStrokeMode = Enum.ApplyStrokeMode.Border,
 			ThemeTag = {
-				Color = "InElementBorder",
+				Color = "ElementBorder",
 			},
 		}),
 	})
