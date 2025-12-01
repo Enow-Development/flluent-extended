@@ -5,7 +5,8 @@
   "main": "init.lua",
   "scripts": {
     "rojo": "mkdirp dist && rojo build -o dist/main.rbxm",
-    "bundle": "pnpm run rojo && lune build"
+    "bundle": "pnpm run rojo && lune run build/init.luau",
+    "build": "node build-script.js"
   },
   "keywords": [],
   "author": "dawid",
