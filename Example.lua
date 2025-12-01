@@ -1,4 +1,4 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/Enow-Development/flluent-extended/releases/latest/download/main.lua"))()
+local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/Enow-Development/flluent-extended/refs/heads/master/main.lua"))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Enow-Development/flluent-extended/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Enow-Development/flluent-extended/master/Addons/InterfaceManager.lua"))()
 
