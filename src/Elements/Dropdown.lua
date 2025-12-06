@@ -357,11 +357,54 @@ function Element:New(Idx, Config)
 				SetSelTransparency(Selected and 0 or 1)
 			end
 
+			local TouchStartPos = nil
+			local IsDragging = false
+			
 			ButtonLabel.InputBegan:Connect(function(Input)
-				if
-					Input.UserInputType == Enum.UserInputType.MouseButton1
-					or Input.UserInputType == Enum.UserInputType.Touch
-				then
+				if Input.UserInputType == Enum.UserInputType.Touch then
+					TouchStartPos = Input.Position
+					IsDragging = false
+				end
+			end)
+			
+			ButtonLabel.InputChanged:Connect(function(Input)
+				if Input.UserInputType == Enum.UserInputType.Touch and TouchStartPos then
+					local DragDistance = (Input.Position - TouchStartPos).Magnitude
+					if DragDistance > 10 then
+						IsDragging = true
+					end
+				end
+			end)
+			
+			ButtonLabel.InputEnded:Connect(function(Input)
+				if Input.UserInputType == Enum.UserInputType.Touch then
+					if not IsDragging and TouchStartPos then
+						local Try = not Selected
+
+						if Dropdown:GetActiveValues() == 1 and not Try and not Config.AllowNull then
+						else
+							if Config.Multi then
+								Selected = Try
+								Dropdown.Value[Value] = Selected and true or nil
+							else
+								Selected = Try
+								Dropdown.Value = Selected and Value or nil
+
+								for _, OtherButton in next, Buttons do
+									OtherButton:UpdateButton()
+								end
+							end
+
+							Table:UpdateButton()
+							Dropdown:Display()
+
+							Library:SafeCallback(Dropdown.Callback, Dropdown.Value)
+							Library:SafeCallback(Dropdown.Changed, Dropdown.Value)
+						end
+					end
+					TouchStartPos = nil
+					IsDragging = false
+				elseif Input.UserInputType == Enum.UserInputType.MouseButton1 then
 					local Try = not Selected
 
 					if Dropdown:GetActiveValues() == 1 and not Try and not Config.AllowNull then
